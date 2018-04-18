@@ -20,7 +20,7 @@ app.use(bodyparser.urlencoded({
 
 
 var rpcConnection = require('./rpcConnection');
-var userRPC=rpcConnection.userRPC(5);
+var userRPC=rpcConnection.userRPC(userID);
 
 
 
