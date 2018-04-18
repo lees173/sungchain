@@ -99,7 +99,7 @@ function setIssue(txtaddress,txtasset,txtamount,txtunit,txtcomment,callback){
 
 function getBlockInfo(numberofblocks, callback){
     
-    userRPC.listBlocks({blocks: "1-10"},(err,info)=>{
+    userRPC.listBlocks({blocks: "-10"},(err,info)=>{
         if(err){
             throw err;
         }
