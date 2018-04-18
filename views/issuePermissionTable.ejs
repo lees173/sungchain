@@ -1,0 +1,43 @@
+<%
+        
+        var getArray= JSON.parse(permissionInfo);
+        var getAddressHash={};
+        console.log(getArray)
+
+        for(var i=0; i < getArray.length; i++) {
+            if(!getAddressHash[getArray[i].address]){
+                getAddressHash[getArray[i].address]=[];
+            }
+            getAddressHash[getArray[i].address].push(getArray[i].type);
+
+        }
+
+        
+    %>
+
+    <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Number</th>
+      <th scope="col">Address</th>
+      <th scope="col">Type</th>
+    
+    </tr>
+  </thead>
+  <tbody>
+    
+    
+    <% var count = 0; 
+    for(var key in getAddressHash) { %>
+    <tr class="table-active">
+      <th scope="row"><%=count++%></th>
+      <td><%=key%></td>
+      <td><%=getAddressHash[key]%></td>
+    </tr>
+    <% }%>
+
+      
+    </tr>
+    
+  </tbody>
+</table> 

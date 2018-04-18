@@ -1,0 +1,29 @@
+<html>
+    <% include infoHeader %>
+<body>
+    <h1> List of Permissions</h1>
+
+
+    <div>
+
+    <form method="POST" action="/listpermissions">
+        <script>
+        function _change(el) {
+            selectedPermission.value=el.options[el.selectedIndex].value;
+        }
+        </script>
+        <select name="selectedPermission" value="all" onchange="_change(this);">
+            <option value="connect">connect</option>
+            <option value="send">send</option>
+            <option value="receive">receive</option>
+            <option value="issue">issue</option>
+            <option value="mine">mine</option>
+            <option value="activate">activate</option>
+            <option value="admin">admin</option>
+            <option value="all">all</option>
+        </select>
+        <input type="submit" value="Go">
+    </form>
+    </div>
+</body>
+</html>

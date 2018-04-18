@@ -1,0 +1,39 @@
+<%
+    var assetInfoJSON= JSON.parse(assetInfo)
+    
+    %>
+    <br>
+
+
+
+    <table class="table table-hover">
+    <thead>
+        <tr>
+        <th scope="col">Number</th>
+        <th scope="col">Asset</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Unit</th>
+        <th scope="col">Comment</th>
+        <th scope="col">issuetxid</th>
+        
+        </tr>
+    </thead>
+    <tbody>
+        
+        
+        <% for(var i=0; i < assetInfoJSON.length; i++) { %>
+        <tr class="table-active">
+        <th scope="row"><%=i%></th>
+        <td><%=assetInfoJSON[i].name%></td>
+        <td><%=assetInfoJSON[i].issueqty%></td>
+        <td><%=assetInfoJSON[i].units%></td>
+        <td><%=assetInfoJSON[i].details.comment%></td>
+        <td><%=assetInfoJSON[i].issuetxid%></td>
+        </tr>
+        <% }%>
+
+        
+        </tr>
+        
+    </tbody>
+    </table>

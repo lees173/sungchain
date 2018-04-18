@@ -1,0 +1,72 @@
+function assetTable(info){
+    <%
+    var getArray= JSON.parse(info)
+    
+    %>
+    <br>
+
+
+
+    <table class="table table-hover">
+    <thead>
+        <tr>
+        <th scope="col">Number</th>
+        <th scope="col">Asset</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Unit</th>
+        <th scope="col">Comment</th>
+        <th scope="col">issuetxid</th>
+        
+        </tr>
+    </thead>
+    <tbody>
+        
+        
+        <% for(var i=0; i < getArray.length; i++) { %>
+        <tr class="table-active">
+        <th scope="row"><%=i%></th>
+        <td><%=getArray[i].name%></td>
+        <td><%=getArray[i].issueqty%></td>
+        <td><%=getArray[i].units%></td>
+        <td><%=getArray[i].details.comment%></td>
+        <td><%=getArray[i].issuetxid%></td>
+        </tr>
+        <% }%>
+
+        
+        </tr>
+        
+    </tbody>
+    </table> 
+}
+
+
+export function issuePermissionTable(info){
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Number</th>
+      <th scope="col">Address</th>
+      <th scope="col">Type</th>
+    
+    </tr>
+  </thead>
+  <tbody>
+    
+    
+    <% var count = 0; 
+    for(var key in getAddressHash) { %>
+    <tr class="table-active">
+      <th scope="row"><%=count++%></th>
+      <td><%=key%></td>
+      <td><%=getAddressHash[key]%></td>
+    </tr>
+    <% }%>
+
+      
+    </tr>
+    
+  </tbody>
+</table> 
+
+}

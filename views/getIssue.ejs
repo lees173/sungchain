@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script>
+function validateForm() {
+
+    var y = document.forms["myForm"]["txtasset"].value;
+    var getAddress = document.forms["myForm"]["txtaddress"].value;
+    var tmpAssetInfoJSON = <%-assetInfo%>;
+
+    var tmpPermissionInfoJSON = <%-permissionInfo%>
+
+
+    for(var j=0; j< tmpPermissionInfoJSON.length;j++){
+        if(tmpPermissionInfoJSON[j].name !=getAddress){
+            alert("Invalid address");
+            return false;
+        }else{
+
+        }
+
+    }
+
+
+    for(var j=0; j< tmpAssetInfoJSON.length;j++){
+        if(tmpAssetInfoJSON[j].name==y){
+            alert("Try use other name");
+            return false;
+        }else{
+
+        }
+
+    }
+
+    var x1 = document.forms["myForm"]["txtaddress"].value;
+    var x2 = document.forms["myForm"]["txtamount"].value;
+    // var x3 = document.forms["myForm"]["txtasset"].value;
+    var x4 = document.forms["myForm"]["txtunit"].value;
+
+
+    if (x1 == "" || x2 == "" || y == "" || x4 == "" ) {
+        alert("Must be filled out");
+        return false;
+    }
+   
+
+
+
+}
+</script>
+</head>
+
+
+    <% include assetHeader %>
+<body>
+    <h1> List of address which has Issue permission</h1>
+
+    
+
+
+    <div>
+    
+
+
+    <form name="myForm" action="/issue" onsubmit="return validateForm()" method="post">
+        <label for="labeladdress">Address</label>
+        <input type = "text" name="txtaddress">
+        <label for="labelasset">Asset</label>
+        <input type = "text" name="txtasset" id="txtasset" oninput="chkAssetFunction()"><p id="chkAsset"></p>
+        <p name= "chkAsset" id="chkAsset"></p>
+        
+        <label for="labelamount">Amount</label>
+
+        <input type = "number" name="txtamount" >
+        <label for="labelunit">Unit</label>
+        <input type = "text" name="txtunit"> Unit must be number
+        <br>
+        <label for="labelcomment">comment</label>
+        <input type = "text" name="txtcomment">
+
+
+        <input type="submit" value="Go">
+    </form>
+    </div>
+    <div>
+
+    <script>
+function chkAssetFunction() {
+    var x = document.getElementById("txtasset").value;
+    document.getElementById("chkAsset").innerHTML = "Checking: " + x;
+    document.getElementById("chkAsset").style.color = 'red';
+    
+    var tmpAssetInfoJSON = <%-assetInfo%>;
+    
+
+    
+
+    for(var j=0; j< tmpAssetInfoJSON.length;j++){
+        if(tmpAssetInfoJSON[j].name==x){
+            document.getElementById("chkAsset").style.color = 'red';
+            document.getElementById("chkAsset").innerHTML = "Don' use the Asset: " + x;
+            console.log(tmpAssetInfoJSON[j].name)
+            break;
+            
+
+        }else{
+            document.getElementById("chkAsset").style.color ='black';
+            console.log(tmpAssetInfoJSON[j].name)
+
+        }
+
+    }
+    
+
+}
+</script>
+   
+
+    <% include issuePermissionTable %>
+    <% include assetTable %>
+
+
+       
+       
+       
+
+        
+    </div>
+</body>
+</html>

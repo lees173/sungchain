@@ -1,0 +1,40 @@
+<%
+    var infoJSON= JSON.parse(info);
+    console.log(typeof infoJSON);
+
+    var getkeys= infoJSON;
+    
+%>
+    <br>
+
+
+
+    <table class="table table-hover">
+    <thead>
+        <tr>
+
+        <th scope="col">Number</th>
+        <%for(let key in getkeys){ %>
+        
+        <th scope="col"><%=getkeys%></th>
+        
+        <% } %>
+
+        </tr>
+    </thead>
+    <tbody>
+        
+        
+        <% for(var i=0; i < infoJSON.length; i++) { %>
+     
+        </tr>
+        <% }%>
+
+        
+        </tr>
+        
+    </tbody>
+    </table>
+
+    <%= infoJSON%>
+    <%= info%>
