@@ -337,7 +337,7 @@ app.get("/sendassetfrom",function(req,res){
         getAddressBalances(function(balance){
 
             setTimeout(function(){
-                res.render("getSendAsset",{
+                res.render("getSendAssetFrom",{
                     balance:JSON.stringify(balance),
                     addrlist:JSON.stringify(addrlist)
 
