@@ -1,0 +1,174 @@
+
+<html>
+
+<head>
+<script>
+function validateForm() {
+
+    var y = document.forms["myForm"]["txtasset"].value;
+
+    var sToAddress=document.getElementById("slttoaddress");
+    var txttoaddress=sToAddress.options[sToAddress.selectedIndex].value;
+    
+    var sFromAddress=document.getElementById("sltfromaddress");
+    var txtfromaddress=sFromAddress.options[sFromAddress.selectedIndex].value;
+    
+    
+
+    
+    var tmpAssetInfoJSON = <%-balance%>;
+
+    var tmpPermissionInfoJSON = <%-addrlist%>
+
+
+    // for(var j=0; j< tmpPermissionInfoJSON.length;j++){
+    //     if(tmpPermissionInfoJSON[j].address !=txtfromaddress){
+    //         alert("Invalid address");
+    //         return false;
+    //     }if else(tmpPermissionInfoJSON[j].address !=txttoaddress){
+    //         alert("Invalid address");
+    //         return false;
+
+    //     }else{
+
+    //     }
+
+    // }
+
+    var checkasset=false;
+    for(var j=0; j< tmpAssetInfoJSON.length;j++){
+        if(tmpAssetInfoJSON[j].name==y){
+            checkasset=true;
+        }
+
+    }
+
+    if(!checkasset){
+        alert("check asset");
+    }
+
+   
+    var x2 = document.forms["myForm"]["txtamount"].value;
+
+
+    if ( x2 == "" ) {
+        alert("Must be filled out");
+        return false;
+    }
+   
+
+
+
+}
+</script>
+</head>
+
+<body>
+
+
+    <% include assetHeader %>
+
+    <h1> Send Asset </h1>
+
+    
+
+
+    <div>
+    
+
+
+    <form name="myForm" action="/postsendasset" onsubmit="return validateForm()" method="post">
+        
+        <label for="labeladdress">To Address:</label>
+        <select size = "1" id="slttoaddress" name = "slttoaddress">
+            
+            <%var tmpPermissionInfoJSON = JSON.parse(addrlist);
+                var getAddressHash={};
+
+                for(var i=0; i < tmpPermissionInfoJSON.length; i++) {
+                    if(!getAddressHash[tmpPermissionInfoJSON[i].address]){
+                        getAddressHash[tmpPermissionInfoJSON[i].address]=[];
+                    }
+                    getAddressHash[tmpPermissionInfoJSON[i].address].push(tmpPermissionInfoJSON[i].type);
+
+                }
+
+        
+             %>
+            <%for(var key in getAddressHash) {%>
+                
+                <option value= "<%= key%>"> <%= key %></option>
+
+
+            <% } %>
+
+        </select>
+        <br>
+
+        <label for="labelasset">Asset</label>
+        <input type = "text" name="txtasset" id="txtasset" oninput="chkAssetFunction()"><p id="chkAsset"></p>
+        <p name= "chkAsset" id="chkAsset"></p>
+        
+        <label for="labelamount">Amount</label>
+
+        <input type = "number" name="txtamount" >
+        <label for="labelcomment">Comment</label>
+        <input type = "text" name="txtcomment"> 
+        <br>
+        <label for="labelcommentto">Comment to</label>
+        <input type = "text" name="txtcommentto">
+
+
+        <input type="submit" value="Go">
+    </form>
+    </div>
+   
+    <div>
+
+    <script>
+function chkAssetFunction() {
+    
+    var x = document.getElementById("txtasset").value;
+    document.getElementById("chkAsset").innerHTML = "Checking: " + x;
+    
+    
+    var tmpAssetInfoJSON = <%- balance %>;
+    
+
+    
+
+    for(var j=0; j< tmpAssetInfoJSON.length;j++){
+        if(tmpAssetInfoJSON[j].name==x){
+            document.getElementById("chkAsset").style.color = 'blue';
+            document.getElementById("chkAsset").innerHTML = "Can use the Asset: " + x;
+           
+            break;
+            
+
+        }else{
+            document.getElementById("chkAsset").style.color ='black';
+            
+
+        }
+
+    }
+    
+
+}
+</script>
+   
+    <h1> List of address </h1>
+    <% include listAddressTable %>
+    <h1> Asset Info</h1>
+    <% include balanceTable%>
+    
+
+
+       
+       
+       
+
+        
+    </div>
+</body>
+</html>

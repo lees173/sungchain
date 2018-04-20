@@ -107,6 +107,16 @@ function getListAssets(callback){
 
     });
 }
+function sendAsset(toAddr,asset,qty,comment,commentTo,callback){
+
+    userRPC.sendAsset({address:toAddr, asset:asset, qty:qty,comment: comment, "comment-to": commentTo},(err,info)=>{
+        if(err){
+            console.log( err);
+        }
+        callback(info);
+
+    });
+}
 function sendAssetFrom(fromAddr,toAddr,asset,qty,comment,commentTo,callback){
 
     userRPC.sendAssetFrom({from:fromAddr, to:toAddr, asset:asset, qty:qty,comment: comment, "comment-to": commentTo},(err,info)=>{
@@ -278,33 +288,67 @@ app.post("/issue",function(req,res){
     });
 
 });
-
-
-
-app.get("/sendfrommoney",function(req,res){
+app.get("/sendasset",function(req,res){
 
     getListAddress(function(addrlist){
         getAddressBalances(function(balance){
 
             setTimeout(function(){
-                res.render("getSendMoney",{
+                res.render("getSendAsset",{
                     balance:JSON.stringify(balance),
                     addrlist:JSON.stringify(addrlist)
-        
-                });
-             
+
+                }); 
             },timeout);
         });
-
     })
 
+});
+app.post("/postsendasset",function(req,res){
 
+    var slttoaddr=req.body.slttoaddress;
+
+   
+
+    var txtasset = req.body.txtasset;
+    var txtamount = parseInt(req.body.txtamount);
+    var txtcomment = req.body.txtcomment;
+    var txtcommentto = req.body.txtcommentto;
+    // res.send("not ready")
+    sendAsset(slttoaddr,txtasset,txtamount,txtcomment,txtcommentto,function(info){
+
+        setTimeout(function(){
+            res.render("postSendAsset",{
+                info:JSON.stringify(info)
+            });
+
+        });
+
+    });
     
-    
+   
 
 });
 
-app.post("/postsendmoney",function(req,res){
+
+app.get("/sendassetfrom",function(req,res){
+
+    getListAddress(function(addrlist){
+        getAddressBalances(function(balance){
+
+            setTimeout(function(){
+                res.render("getSendAsset",{
+                    balance:JSON.stringify(balance),
+                    addrlist:JSON.stringify(addrlist)
+
+                }); 
+            },timeout);
+        });
+    })
+
+});
+
+app.post("/postsendassetfrom",function(req,res){
 
     var sltfromaddr=req.body.sltfromaddress;
     var slttoaddr=req.body.slttoaddress;
@@ -319,16 +363,13 @@ app.post("/postsendmoney",function(req,res){
     sendAssetFrom(sltfromaddr,slttoaddr,txtasset,txtamount,txtcomment,txtcommentto,function(info){
 
         setTimeout(function(){
-            res.render("postSendMoney",{
+            res.render("postSendAsset",{
                 info:JSON.stringify(info)
             });
 
         });
 
     });
-    
-   
-
 });
     
     
