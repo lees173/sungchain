@@ -281,7 +281,7 @@ app.post("/issue",function(req,res){
 
 
 
-app.get("/sendmoney",function(req,res){
+app.get("/sendfrommoney",function(req,res){
 
     getListAddress(function(addrlist){
         getAddressBalances(function(balance){
