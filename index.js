@@ -31,7 +31,7 @@ function getInfo(callback){
 
     userRPC.getInfo((err, info) => {
         if(err){
-            throw err;
+            console.log( err);
         }
         callback(info);
     })
@@ -41,7 +41,7 @@ function getListpermissions(permission, callback){
 
     userRPC.listPermissions({"permissions":permission},(err, info) => {
         if(err){
-            throw err;
+            console.log( err);
         }
         callback(info);
     })
@@ -53,7 +53,7 @@ function getListAddress(callback){
 
     userRPC.listPermissions({"addresses":"*"},(err, info) => {
         if(err){
-            throw err;
+            console.log( err);
         }
         callback(info);
     })
@@ -71,7 +71,7 @@ function getIssue(callback){
 function getAddresses(callback){
     userRPC.getAddresses((err,info)=>{
         if(err){
-            throw err;
+            console.log( err);
         }
         callback(info);
 
@@ -85,7 +85,7 @@ function getAddressBalances(callback){
    
         userRPC.getAddressBalances(info,(err,balance)=>{
             if(err){
-                throw err;
+                console.log( err);
             }
             callback(balance);
 
@@ -101,7 +101,7 @@ function getListAssets(callback){
    
     userRPC.listAssets((err,info)=>{
         if(err){
-            throw err;
+            console.log( err);
         }
         callback(info);
 
@@ -111,7 +111,7 @@ function sendAssetFrom(fromAddr,toAddr,asset,qty,comment,commentTo,callback){
 
     userRPC.sendAssetFrom({from:fromAddr, to:toAddr, asset:asset, qty:qty,comment: comment, "comment-to": commentTo},(err,info)=>{
         if(err){
-            throw err;
+            console.log( err);
         }
         callback(info);
 
@@ -123,7 +123,7 @@ function setIssue(txtaddress,txtasset,txtamount,txtunit,txtcomment,callback){
     
     userRPC.issue({address: txtaddress, asset: txtasset, qty: parseInt(txtamount), units: parseFloat(txtunit), details: {comment: txtcomment}},(err,info)=>{
         if(err){
-            throw err;
+            console.log( err);
         }
         callback(info);
 
@@ -134,7 +134,7 @@ function getBlockInfo(numberofblocks, callback){
     
     userRPC.listBlocks({blocks: "-10"},(err,info)=>{
         if(err){
-            throw err;
+            console.log( err);
         }
         callback(info);
 
