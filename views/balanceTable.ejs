@@ -1,0 +1,41 @@
+ <br>
+    
+
+<%
+
+    var getArray = JSON.parse(balance);
+%>
+    <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Number</th>
+      <th scope="col">Asset</th>
+      <th scope="col">Asset Ref</th>
+      <th scope="col">Amount</th>
+    
+    </tr>
+  </thead>
+  <tbody>
+    
+    
+    
+    
+    <% var count=0;
+    for(var i=0;i<getArray.length;i++) { %>
+    
+    <tr class="table-active">
+      <th scope="row"><%=count++%></th>
+      <td><%=getArray[i].name%></td>
+      <td><%=getArray[i].assetref%></td>
+      <td><%=getArray[i].qty%></td>
+
+
+    </tr>
+
+    <% }%>
+
+      
+    </tr>
+    
+  </tbody>
+</table> 

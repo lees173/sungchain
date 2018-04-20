@@ -25,6 +25,7 @@ var userRPC=rpcConnection.userRPC(userID);
 
 
 
+
 function getInfo(callback){
     
 
@@ -64,17 +65,37 @@ function getIssue(callback){
         getListpermissions('issue',function(permissionInfo){
             callback(assetInfo,permissionInfo)
         
-        });
-        
-        
+        }); 
+    });
+};
+function getAddresses(callback){
+    userRPC.getAddresses((err,info)=>{
+        if(err){
+            throw err;
+        }
+        callback(info);
+
     });
 
+}
+function getAddressBalances(callback){
+    getAddresses(function(info){
+        console.log(info);
     
-    
-    
+   
+        userRPC.getAddressBalances(info,(err,balance)=>{
+            if(err){
+                throw err;
+            }
+            callback(balance);
 
+        });
 
-};
+     
+       
+
+    });
+}
 
 function getListAssets(callback){
    
@@ -86,6 +107,18 @@ function getListAssets(callback){
 
     });
 }
+function sendAssetFrom(fromAddr,toAddr,asset,qty,comment,commentTo,callback){
+
+    userRPC.sendAssetFrom({from:fromAddr, to:toAddr, asset:asset, qty:qty,comment: comment, "comment-to": commentTo},(err,info)=>{
+        if(err){
+            throw err;
+        }
+        callback(info);
+
+    });
+}
+
+
 function setIssue(txtaddress,txtasset,txtamount,txtunit,txtcomment,callback){
     
     userRPC.issue({address: txtaddress, asset: txtasset, qty: parseInt(txtamount), units: parseFloat(txtunit), details: {comment: txtcomment}},(err,info)=>{
@@ -107,6 +140,9 @@ function getBlockInfo(numberofblocks, callback){
 
     });
 }
+
+
+
 
 app.get("/",function(req,res){
     res.render("index");
@@ -203,10 +239,6 @@ app.get("/issue",function(req,res){
     
     getIssue(function(assetInfo,permissionInfo){
 
-        console.log('issue');
-        console.log(assetInfo);
-        console.log(permissionInfo);
-
 
 
         setTimeout(function(){
@@ -229,7 +261,7 @@ app.get("/issue",function(req,res){
 
 app.post("/issue",function(req,res){
 
-    var txtaddress = req.body.txtaddress;
+    var txtaddress = req.body.slttoaddress;
     var txtasset = req.body.txtasset;
     var txtamount = req.body.txtamount;
     var txtunit = req.body.txtunit;
@@ -250,13 +282,52 @@ app.post("/issue",function(req,res){
 
 
 app.get("/sendmoney",function(req,res){
-    getInfo(function(info){
-        setTimeout(function() {
-        res.render("getInfo",{
-            info:JSON.stringify(info)
+
+    getListAddress(function(addrlist){
+        getAddressBalances(function(balance){
+
+            setTimeout(function(){
+                res.render("getSendMoney",{
+                    balance:JSON.stringify(balance),
+                    addrlist:JSON.stringify(addrlist)
+        
+                });
+             
+            },timeout);
         });
-    },1000);
+
+    })
+
+
+    
+    
+
+});
+
+app.post("/postsendmoney",function(req,res){
+
+    var sltfromaddr=req.body.sltfromaddress;
+    var slttoaddr=req.body.slttoaddress;
+
+   
+
+    var txtasset = req.body.txtasset;
+    var txtamount = parseInt(req.body.txtamount);
+    var txtcomment = req.body.txtcomment;
+    var txtcommentto = req.body.txtcommentto;
+    // res.send("not ready")
+    sendAssetFrom(sltfromaddr,slttoaddr,txtasset,txtamount,txtcomment,txtcommentto,function(info){
+
+        setTimeout(function(){
+            res.render("postSendMoney",{
+                info:JSON.stringify(info)
+            });
+
+        });
+
     });
+    
+   
 
 });
     
