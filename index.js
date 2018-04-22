@@ -43,6 +43,7 @@ function getListpermissions(permission, callback){
         if(err){
             console.log( err);
         }
+        console.log(info);
         callback(info);
     })
 
@@ -55,6 +56,7 @@ function getListAddress(callback){
         if(err){
             console.log( err);
         }
+        console.log(info);
         callback(info);
     })
 
