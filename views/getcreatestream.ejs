@@ -1,0 +1,33 @@
+<html>
+
+
+<body>
+<% include dataHeader %>
+<h1> Create Stream </h1>
+
+
+<div>
+
+    <form name="myForm" action="/postcreatestream" onsubmit="return validateForm()" method="post">
+
+
+        <label for="labelstreamname">Stream name:</label>
+        <input type = "text" name="txtstreamname"> 
+        <label for="labelstreamdetail">Detail:</label>
+        <input type = "text" name="txtstreamdetail"> 
+        <input type="submit" value="Go">
+
+    </form>
+</div>
+<div>
+<br>
+<h1> List of Stream </h1>
+
+
+   
+
+    <% include listStreamsTable %>
+
+<div>
+</body>
+</html>

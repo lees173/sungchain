@@ -1,0 +1,51 @@
+ <br>
+    <%
+        var getArray= JSON.parse(info);
+       
+    %>
+
+    <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Number</th>
+
+      <%  Object.keys(getArray[0]).forEach(function (key) { 
+          if(key=="data"){}
+          else{%>
+      <th scope="col"><%=key%></th>
+   
+   <% } }) %>
+
+    
+    </tr>
+  </thead>
+  <tbody>
+
+      <% var count = 0; 
+    for(var i =0 ; i < getArray.length; i++){%>
+
+    
+        
+        <tr class="table-active">
+        <th scope="row"><%=count++%></th>
+        <td><%=getArray[i].publishers%></td>
+        <td><%=getArray[i].key%></td>
+        <td><%=getArray[i].confirmations%></td>
+        <td><%=getArray[i].blocktime%></td>
+        <td><%=getArray[i].txid%></td>
+         
+
+
+
+
+        
+        </tr>
+
+        
+    <% }%>
+
+      
+
+    
+  </tbody>
+</table> 

@@ -1,0 +1,28 @@
+<html>
+
+
+<body>
+<% include dataHeader %>
+<div>
+
+<h1> Get Smart Contract </h1> <br>
+
+   <form name="myForm" action="/getsmartcontract" onsubmit="return validateForm()" method="post">
+
+
+        <label for="labelstreamname">Input txid:</label>
+        <input type = "text" name="txttxid" size =65> 
+        <input type="submit" value="Go">
+
+    </form>
+
+<br>
+
+<%include publishItemTable%>
+
+
+
+
+</div>
+</body>
+</html>

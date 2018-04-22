@@ -1,0 +1,45 @@
+<html>
+<body>
+<% include dataHeader %>
+
+
+
+<h1>Smart Contract</h1>
+<br>
+
+
+<div>
+
+<%
+    var example='\<\%function mul(a,b){return a*b;} \
+     \n for (var a = 1; a<10 ;a++){ \
+        \n    for(var b =1 ; b<10;b++){\%\> \
+        \n    \<\%=a\%\>  * \<\%=b\%\> = \<\%=mul(a,b)\%\>  \
+        \n       \
+    \n \<\%    } \%\>  \<br\> \
+    \n    \<\% }\%\> ';
+
+%>
+
+    <form name="myForm" action="/makesmartcontract" onsubmit="return validateForm()" method="post">
+
+        <label for="labelname">Contract Name: (Unique Name)</label><br>
+        <input type = "text" name="txtname">
+        <input type="submit" value="Go"><br>
+        <label for="labelContract"> Contract: </label><br>
+        <textarea name="txtContract" rows=40 cols=100>
+        <%=example%>
+        </textarea>
+        
+    </form>
+
+
+
+
+
+</div>
+
+
+
+</body>
+</html>

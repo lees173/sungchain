@@ -1,4 +1,4 @@
-
+var fs=require('fs');
 var express = require("express");
 var path = require('path');
 var app = express();
@@ -167,7 +167,13 @@ app.get("/asset",function(req,res){
 });
 app.get("/block",function(req,res){
     res.render("getblockInfo");
+    
 });
+
+app.get("/data",function(req,res){
+    res.render("getData");
+});
+
 app.get("/recentblock",function(req,res){
     getBlockInfo("-10",function(info){
         setTimeout(function() {
@@ -191,6 +197,8 @@ app.get("/getInfo",function(req,res){
 
     // res.send("Select Tap among ( List Address, List Permissions, List Assets)")
 });
+
+
 
 
 
@@ -242,7 +250,7 @@ app.get("/listassets",function(req,res){
     });
 });
 
- 
+ /// Asset Tap/////////////
 app.get("/issue",function(req,res){
 
 
@@ -371,9 +379,178 @@ app.post("/postsendassetfrom",function(req,res){
 
     });
 });
-    
-    
 
+
+/////Data tap/////////////////
+function listStreams(callback){
+    userRPC.listStreams((err,info)=>{
+
+    if(err){
+            console.log( err);
+        }
+        callback(info);
+    });
+}
+// function setIssue(txtaddress,txtasset,txtamount,txtunit,txtcomment,callback){
+    
+//     userRPC.issue({address: txtaddress, asset: txtasset, qty: parseInt(txtamount), units: parseFloat(txtunit), details: {comment: txtcomment}},(err,info)=>{
+//         if(err){
+//             console.log( err);
+//         }
+//         callback(info);
+
+//     });
+// }
+
+function createStream(name,detail,callback){
+    userRPC.create({type:"stream",name:name,open:true,detail:{detail}},(err,info)=>{
+        userRPC.subscribe({stream:name},(err,info)=>{
+            if(err){
+                console.log(err);
+            }
+            callback(info);
+            
+    });
+        
+    });
+
+}
+
+function publish(getkey,getdata,callback){
+    userRPC.publish({stream:"contract1",key:getkey,data:getdata},(err,info)=>{
+        if(err){
+            console.log( err);
+        }
+        callback(info);
+
+    });
+}
+function listStreamItems(callback){
+    userRPC.listStreamItems({stream:"contract1"},(err,info)=>{
+        if(err){
+            console.log( err);
+        }
+        callback(info);
+
+    });
+
+}
+
+function getStreamItem(txttxid,callback){
+    userRPC.getStreamItem({stream:"contract1",txid:txttxid},(err,info)=>{
+        if(err){
+            console.log( err);
+        }
+        callback(info);
+
+    });
+}
+app.get("/createstream",function(req,res){
+    listStreams(function(info){
+        setTimeout(function(){
+            res.render("getcreatestream",{
+                info:JSON.stringify(info)
+            });
+            
+        },timeout);
+
+    });
+
+});
+app.post("/postcreatestream",function(req,res){
+
+    var txtname = req.body.txtstreamname;
+    var txtdetail = req.body.txtstreamdetail;
+    createStream(txtname,txtdetail,function(info){
+        setTimeout(function(){
+
+            listStreams(function(info){
+                setTimeout(function(){
+                    res.render("getcreatestream",{
+                        info:JSON.stringify(info)
+                    });
+                    
+                },timeout);
+
+            });
+        },timeout);
+
+    });
+});
+
+
+app.get("/publishmessage",function(req,res){
+    res.send("<h1>Not ready </br>")
+
+});
+app.get("/publishfile",function(req,res){
+    res.send("<h1>Not ready </br>")
+
+});
+app.get("/makesmartcontract",function(req,res){
+    res.render("makesmartcontract")
+
+});
+
+app.post("/makesmartcontract",function(req,res){
+    var txtname = req.body.txtname;
+   var txtContract = req.body.txtContract;
+   var datahex=Buffer.from(txtContract, 'utf8').toString('hex');
+
+ 
+
+    publish(txtname,datahex,function(info){
+        setTimeout(function(){
+            res.render("postmakesmartcontract",{
+                info:JSON.stringify(info)
+            });
+        },timeout);
+    });
+
+});
+
+
+app.get("/getsmartcontract",function(req,res){
+    listStreamItems(function(info){
+        setTimeout(function(){
+            res.render("getsmartcontract",{
+                info:JSON.stringify(info)
+            });
+        },timeout);
+
+    });
+   
+});
+
+
+
+app.post("/getsmartcontract",function(req,res){
+
+    var txttxid=req.body.txttxid;
+    getStreamItem(txttxid,function(info){
+
+        setTimeout(function(){
+            var getcontractdata=Buffer.from(info.data,'hex').toString('utf8');
+            fs.writeFile('./views/contract.ejs',getcontractdata,function(){
+                res.render("postsmartcontract",{
+                    info:getcontractdata
+                });
+
+
+
+            });
+            
+
+
+
+            // res.send("<html>"+getcontractdata+"</html>");
+            
+        },timeout);
+
+    });
+   
+});
+    
 
 
 app.listen(5000,function(){

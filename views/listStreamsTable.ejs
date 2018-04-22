@@ -1,0 +1,55 @@
+ <br>
+    <%
+        var getArray= JSON.parse(info);
+       
+    %>
+
+    <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Number</th>
+
+      <%  Object.keys(getArray[0]).forEach(function (key) { %>
+      <th scope="col"><%=key%></th>
+   
+   <% }) %>
+
+    
+    </tr>
+  </thead>
+  <tbody>
+    
+    
+    <% var count = 0; 
+    for(var i =0 ; i < getArray.length; i++){%>
+
+    
+        
+        <tr class="table-active">
+        <th scope="row"><%=count++%></th>
+        <td><%=getArray[i].name%></td>
+        <td><%=getArray[i].createtxid%></td>
+        <td><%=getArray[i].streamref%></td>
+        <td><%=getArray[i].open%></td>
+        <td><%=getArray[i].details%></td>
+        <td><%=getArray[i].subscribed%></td>
+        <td><%=getArray[i].synchronized%></td>
+        <td><%=getArray[i].items%></td>
+        <td><%=getArray[i].confirmed%></td>
+        <td><%=getArray[i].keys%></td>
+        <td><%=getArray[i].publishers%></td>       
+
+
+
+
+        
+        </tr>
+
+        
+    <% }%>
+
+      
+
+    
+  </tbody>
+</table> 
