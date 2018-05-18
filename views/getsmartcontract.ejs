@@ -6,6 +6,19 @@
 <div>
 
 <h1> Get Smart Contract </h1> <br>
+<h2>
+1. Copy the "txid" which you want to get contract in the table. <br> 
+2. Paste the txid on "Input txid" textbox and press "Go" button.<br>
+</h2>
+
+Publisher: Address which created the contract <br>
+Key: Contract Name <br>
+Confirmation: Number of Confirmation by miner <br>
+blocktime: Created time. <br>
+txid: Unique ID of the contract <br>
+<br>
+
+
 
    <form name="myForm" action="/getsmartcontract" onsubmit="return validateForm()" method="post">
 
@@ -17,7 +30,7 @@
     </form>
 
 <br>
-
+<h1>List of Contract table</h1>
 <%include publishItemTable%>
 
 

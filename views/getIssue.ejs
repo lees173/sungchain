@@ -45,7 +45,16 @@ function validateForm() {
 
     <% include assetHeader %>
 <body>
-    <h1> List of address which has Issue permission</h1>
+    <h1> Create Asset (Currency)</h1>
+
+    1. Select address who will publish asset in blockchain.<br>
+    2. "Asset" - Input asset name in "Asset" textbox. Don't use exist asset name in the blockchain. <br>
+    3. "Amount" - Input amount of currency to publish in the blockchain. (Only one time publish with the asset name) <br>
+    4. "Unit" - Unit is currency unit. (Ex. In USD 1 is one dollor, 0.01 is cent. If you want to make USD currency unit input 0.01) <br>
+    5. "Comment" - Add any comment for the currency. <br>
+
+    You can check the addresses which have a issue permission below the table. Also, you can check the asset which already is in the blockchain.<br>
+
 
     
 
@@ -81,7 +90,7 @@ function validateForm() {
 
         <input type = "number" name="txtamount" >
         <label for="labelunit">Unit</label>
-        <input type = "text" name="txtunit"> Unit must be number
+        <input type = "text" name="txtunit"> Unit (must be number)
         <br>
         <label for="labelcomment">comment</label>
         <input type = "text" name="txtcomment">
