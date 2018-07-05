@@ -2,12 +2,23 @@ module.exports=function(app,rpcf,timeout){
     var express = require('express');
     var router = express.Router();
     var fs=require('fs');
+    var request = require('request')
     
 
 
     router.get("/",function(req,res){
-        res.render("index");
-    });
+        // res.render("index");
+
+        var url = 'https://api.coinmarketcap.com/v2/ticker/?limit=100';
+        request(url,function(err,response,html){
+            if(err){
+                console.log(err);
+            }
+            res.render("index",{
+                data:html
+            });
+        });
+    })
 
     router.get("/info",function(req,res){
         res.render("getInfo");

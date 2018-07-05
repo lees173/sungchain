@@ -16,8 +16,52 @@
     "Block" - General block information in the blockchain <br>
     "Data" - Transaction in the block such as smart contract and general data <br>
     </h2>
+
+    <h1> Market Price</h1>
+
    
 
+<% 
+
+var cols=['rank','symbol','circulating_supply', 'total_supply','max_supply','price','volume_24h','market_cap','percent_change_1h','percent_change_24h','percent_change_7d' ];
+
+%>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <% for(var i =0; i<cols.length;i++){ %>
+            
+            <th scope="col"><%=cols[i]%> </th>
+            <% } %>
+        </tr>
+    </thead>
+    <tbody>
+       
+            <% var dataJSON= JSON.parse(data);
+            var keys= Object.keys(dataJSON.data);
+            console.log(dataJSON); 
+            console.log(dataJSON.data[keys[0]]['quotes']); 
+
+            for(var i=0; i<keys.length;i++){ %>
+                <tr class="table-active">
+                    <%for(var j=0; j<5; j++){ %>
+                    <th scope="row"><%=dataJSON.data[keys[i]][cols[j]]%></th> 
+                    <% } %>
+
+                    <%for(var j=5; j<11; j++){ %>
+                    <th scope="row"><%=dataJSON.data[keys[i]]['quotes']['USD'][cols[j]]%></th> 
+                    <% } %>
+                
+                
+                </tr>
+            <% } %>
+
+
+        
+    </tbody>
+
+</table>
 
 
 
