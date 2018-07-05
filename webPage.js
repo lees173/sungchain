@@ -9,7 +9,7 @@ module.exports=function(app,rpcf,timeout){
     router.get("/",function(req,res){
         // res.render("index");
 
-        var url = 'https://api.coinmarketcap.com/v2/ticker/?limit=100';
+        var url = 'https://api.coinmarketcap.com/v2/ticker/?limit=100&sort=rank';
         request(url,function(err,response,html){
             if(err){
                 console.log(err);
